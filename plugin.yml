@@ -1,0 +1,10 @@
+name: FranticGod
+main: org.frantictools.franticgod.FranticGod
+version: 1.0
+
+commands:
+   godsays:
+      description: Speak with the word of god.
+      permission: franticgod.godsays
+      usage: |
+        /godsays <text>
