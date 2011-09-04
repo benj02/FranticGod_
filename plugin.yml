@@ -8,3 +8,18 @@ commands:
       permission: franticgod.godsays
       usage: |
         /godsays <text>
+permissions:
+    franticgod.*:
+        description: Gives access to all franticgod stuff.
+        children:
+            franticgod.immune: true
+            franticgod.godsays: true
+    franticgod.immune:
+        description: Immune to franticgod
+        default: op
+    franticgod.godsays:
+        description: Allows you to use the /godsays command
+        default: op
+    franticgod.godban:
+        description: Allows you to use the /godban command
+        default: op

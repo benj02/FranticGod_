@@ -24,12 +24,16 @@ public class FranticGodPlayerListener extends PlayerListener {
 		
 		try {
 			if (spamMap.get(name).equalsIgnoreCase(msg) && (Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 1000.0) {
-				sender.kickPlayer("So you tried to spam us?\nWell, you fucking fail.");
+				sender.kickPlayer("We don't appreciate spam here, assfuck.");
 				return;
 			}
 		} catch (Exception tits) {
-			plugin.log.info("Shit happened: " + tits.toString());
-			tits.printStackTrace();
+			// Open void
+		}
+		
+		if (msg.matches("([A-Z]| |[1-9]|\\.|!|\\?)*") && msg.length() > 5) {
+			sender.kickPlayer("Caps Lock is cruise control for cool amirite?");
+			return;
 		}
 	
 
@@ -39,8 +43,7 @@ public class FranticGodPlayerListener extends PlayerListener {
 		if (!sender.hasPermission("franticgod.immune")) {
 			for (int i = 0; i < plugin.regexList.size(); i++) {
 				if (msg.matches(plugin.regexList.get(i))) {
-					plugin.getServer().broadcastMessage(
-							FranticGod.godPrefix + plugin.replList.get(i));
+					plugin.godMessage(plugin.replList.get(i));
 				}
 
 			}
@@ -48,4 +51,5 @@ public class FranticGodPlayerListener extends PlayerListener {
 
 		}
 	}
+	
 }

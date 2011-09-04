@@ -11,14 +11,20 @@ import java.io.InputStreamReader;
 //import java.io.IOException;
 //import java.util.Properties;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
+import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Event;
+
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 @SuppressWarnings("unused")
 public class FranticGod extends JavaPlugin {
@@ -26,28 +32,10 @@ public class FranticGod extends JavaPlugin {
 	public static final String godPrefix = ChatColor.DARK_RED + "[" + ChatColor.RED + "God" + ChatColor.DARK_RED + "]" + ChatColor.WHITE + " ";
 	private final FranticGodPlayerListener playerListener = new FranticGodPlayerListener(this);
 	public Logger log = Logger.getLogger("minecraft");
-
-//	public static final String[] regexArray = new String[] {
-//			"(?i).*?(Why).*?(Do).*?(have).*?(register|registration).*?",  						//When are we registering
-//			"(?i).*?(How).*?(Do).*?(register|registration).*?",
-//			"(?i).*?(When|Why).*?(Bukkit).*?(update|updating|updated).*?",						//When are we updating
-//			"(?i).*?(When|Why).*?(1\\.8).*?",							 						//When are we going to 1.8
-//			"(?i).*?(Using|uses|used).*?(Fly *(hack|mod)).*?",									//x is using flyhack
-//			"^(?=.*?\bfly ?(hack|mod)\b)((?=.*?\bcan\b)|(?=.*?\buse\b)|(?=.*?\ballow(ed)?\b)).*$",		//can i use a flyhack
-//			"(?i).*?(lag|lagging).*?",															//lag
-//			"(?i).*?avo(lition)*.*?",															//team avo
-//			"(?i)t/.*?",																		//fail command
-//			"(?i).*?(didn'?t|did ?not).*?(e-?mail).*?",											//didnt get email
-//			"(?i).*?(can).*?(build).*?",														//can i build
-//			"^[a-z]",																			//all caps
-//			"(?i).*?(How|can).*?(private|lock|protect).*?",							//cprivate
-//			"(?i).*?(i('m)?).*?(bored).*?",											//bored
-//			"(?i).*?(can).*?(spawn).*?(item(s?)|thing(s?)).*?",					//can spawn items
-//			"(?i).*?(how).*?(set).*?(home|spawn).*?",							//how to set home
-//			"(?i).*?(lost).*?(home|house).*?",									//lost my home
-//			"(?i).*?(x-?ray).*?",												//x-ray
-//			"(?i).*?(can).*?(make).*?(day).*?",									//can make it day
-//	}; 
+	
+	public static PermissionHandler permissionHandler;
+	
+	public static HashMap<String, Boolean> godBanMap = new HashMap<String, Boolean>(); 
 
 	public ArrayList<String> regexList = new ArrayList<String>(); 
 	public ArrayList<String> replList = new ArrayList<String>(); 
@@ -59,23 +47,29 @@ public class FranticGod extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		PluginManager pm = this.getServer().getPluginManager();
-		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Monitor, this);
+		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+		
 		
 		getCommand("godsays").setExecutor(new GodSaysCommand(this));       // Registering commands:
+		//getCommand("godban").setExecutor(new GodBanCommand(this));
 
-		//loadFile();
-		// I'm too lazy to make files work, so i'm hard-coding regexs. 
+		loadFile();
+
 		log.info("FranticGod v: " + version + " is enabled :D");
 	}
 
 	private void loadFile() {
 		try {
-			FileReader file = new FileReader("godList.txt");
+			FileReader file = new FileReader(new File("godList.txt"));
 			BufferedReader br = new BufferedReader(file);
 			
-			String[] temp = br.readLine().split(";");
-			regexList.add(temp[0]);
-			replList.add(temp[1]);
+			String tits;
+			while ((tits = br.readLine()) != null) {
+				String[] temp = tits.split(";");
+				regexList.add(temp[0]);
+				replList.add(temp[1]);
+			}
 		    
 			br.close();
 			file.close();
@@ -83,6 +77,24 @@ public class FranticGod extends JavaPlugin {
 			log.info("Error" + e.toString());
 			e.printStackTrace();
 		}
+	}
+	
+	private void setupPermissions() {
+		if (permissionHandler != null)
+			return;
+		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
+
+		if (permissionsPlugin == null) {
+		    log.info("Permission system not detected, defaulting to OP");
+		    return;
+		}
+
+		permissionHandler = ((Permissions) permissionsPlugin).getHandler();
+		log.info("Found and will use plugin "+((Permissions)permissionsPlugin).getDescription().getFullName());
+	}
+	
+	public void godMessage(String msg) {
+		getServer().broadcastMessage(godPrefix + msg);
 	}
 
 	@Override

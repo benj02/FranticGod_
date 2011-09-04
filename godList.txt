@@ -1,0 +1,17 @@
+(?i).*?(Why).*?(Do).*?(have).*?(register|registration).*?;Because we want to steal your credit card info.
+(?i).*?(How).*?(Do).*?(register|registration).*?;franticme.com -> Rules -> Register.
+(?i).*?(When|Why).*?(Bukkit).*?(update|updating|updated).*?;It isn't.
+(?i).*?(When|Why).*?(1\\.8).*?;1.8 is a myth.
+(?i).*?(Using|uses|used).*?(Fly *(hack|mod)).*?;Take a screenshot and post it in complaints on the forums.
+(?i).*?(lag|lagging).*?;Type /lag, if it's less than 15, it's your own damn problem.
+(?i).*?avo(lition)*.*?;Avo sucks dick.
+(?i)t/.*?;You fucking fail, loser!
+(?i).*?(didn'?t|did ?not).*?(e-?mail).*?;Check your spam folder.
+(?i).*?(can).*?(build).*?;If you register.
+(?i).*?(How|can).*?(private|lock|protect).*?;Yes, use /cprivate on a furnace, chest, door, or sign.
+(?i).*?(i((')?m)?).*?(bored).*?;Then do something...
+(?i).*?(can).*?(spawn).*?(item(s?)|thing(s?)).*?;Sure go puch a tree, it spawns a block of wood!
+(?i).*?(how).*?(set).*?(home|spawn).*?;/sethome
+(?i).*?(lost).*?(home|house).*?;That sucks dude.
+(?i).*?(x-?ray).*?;GOD DOES NOT APPROVE OF X-RAY HACKS ON HIS SERVER!
+(?i).*?(can).*?(make).*?(day).*?;nope.avi
