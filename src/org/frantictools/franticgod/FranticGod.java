@@ -50,6 +50,7 @@ public class FranticGod extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Monitor, this);
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
 		
+		setupPermissions();
 		
 		getCommand("godsays").setExecutor(new GodSaysCommand(this));       // Registering commands:
 		//getCommand("godban").setExecutor(new GodBanCommand(this));

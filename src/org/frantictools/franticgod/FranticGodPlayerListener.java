@@ -3,6 +3,7 @@ package org.frantictools.franticgod;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -25,6 +26,11 @@ public class FranticGodPlayerListener extends PlayerListener {
 		try {
 			if (spamMap.get(name).equalsIgnoreCase(msg) && (Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 1000.0) {
 				sender.kickPlayer("We don't appreciate spam here, assfuck.");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + " forgot to take his ritalin, and tried to spam us.");
+				return;
+			} else if ((Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 300.0) {
+				sender.kickPlayer("We don't appreciate spam here, assfuck.");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + " forgot to take his ritalin, and tried to spam us.");
 				return;
 			}
 		} catch (Exception tits) {
@@ -43,7 +49,9 @@ public class FranticGodPlayerListener extends PlayerListener {
 		if (!sender.hasPermission("franticgod.immune")) {
 			for (int i = 0; i < plugin.regexList.size(); i++) {
 				if (msg.matches(plugin.regexList.get(i))) {
-					plugin.godMessage(plugin.replList.get(i));
+					GodResponder responder = new GodResponder(plugin.replList.get(i), plugin);
+					Thread thread = new Thread(responder);
+					thread.start();
 				}
 
 			}
@@ -51,5 +59,6 @@ public class FranticGodPlayerListener extends PlayerListener {
 
 		}
 	}
-	
+
 }
+
