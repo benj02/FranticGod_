@@ -25,19 +25,19 @@ public class FranticGodPlayerListener extends PlayerListener {
 		
 		try {
 			if (spamMap.get(name).equalsIgnoreCase(msg) && (Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 1000.0) {
-				sender.kickPlayer("We don't appreciate spam here, assfuck.");
-				plugin.getServer().broadcastMessage(ChatColor.RED + name + " forgot to take his ritalin, and tried to spam us.");
+				sender.kickPlayer("We don't appreciate spam here..");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + " tried to spam us.");
 				return;
 			} else if ((Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 300.0) {
-				sender.kickPlayer("We don't appreciate spam here, assfuck.");
-				plugin.getServer().broadcastMessage(ChatColor.RED + name + " forgot to take his ritalin, and tried to spam us.");
+				sender.kickPlayer("We don't appreciate spam here.");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + " tried to spam us.");
 				return;
 			}
 		} catch (Exception tits) {
 			// Open void
 		}
 		
-		if (msg.matches("([A-Z]| |[1-9]|\\.|!|\\?)*") && msg.length() > 5) {
+		if (msg.matches("([A-Z]| |[1-9]|\\.|!|\\?)*") && msg.length() > 5 && !sender.hasPermission("franticgod.immune")) {
 			sender.kickPlayer("Caps Lock is cruise control for cool amirite?");
 			return;
 		}
