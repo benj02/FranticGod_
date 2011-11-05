@@ -26,11 +26,11 @@ public class FranticGodPlayerListener extends PlayerListener {
 		try {
 			if (spamMap.get(name).equalsIgnoreCase(msg) && (Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 1000.0) {
 				sender.kickPlayer("We don't appreciate spam here..");
-				plugin.getServer().broadcastMessage(ChatColor.RED + name + " tried to spam us.");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + ChatColor.WHITE + " tried to spam us.");
 				return;
 			} else if ((Calendar.getInstance().getTimeInMillis() - timeMap.get(name)) < 300.0) {
 				sender.kickPlayer("We don't appreciate spam here.");
-				plugin.getServer().broadcastMessage(ChatColor.RED + name + " tried to spam us.");
+				plugin.getServer().broadcastMessage(ChatColor.RED + name + ChatColor.WHITE +  " tried to spam us.");
 				return;
 			}
 		} catch (Exception tits) {
